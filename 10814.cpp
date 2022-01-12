@@ -1,60 +1,23 @@
-#include<iostream>
-#include<string>
-#include<algorithm>
-#include<vector>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
 using namespace std;
-
-int main(){
-    cin.tie(NULL); cout.tie(NULL);
-    int num;
-    vector<pair<int, string> > vec;
-
-    for(int i =0; i < num; i++){
-        int a; 
-        string b;
-        cin >>a>>b;
-        vec.push_back(pair<int,string> (a,b));
-    }
-
-    stable_sort(vec.begin(),vec.end());
-
-    for(int i =0; i < num; i++){
-        cout<< vec[i].first<< " "<< vec[i].second<<"\n";
-    }
-
+bool compare(pair<int,string> a, pair<int,string> b)
+{
+    return a.first < b.first;
 }
-
-/*
-#include<iostream>
-#include<string>
-#include<algorithm>
-using namespace std;
-
-class compare{
-    public:
-        compare(){}
-
-    
-    int age;
-    string name;
-    int score;
-};
-
-int main(){
+int main() {
     int num;
     cin >> num;
-    class compare *cmp = (compare*)malloc(sizeof(compare) *num);
-
-    for(int i =0; i < num; i++){ //입력
-        cin >> cmp[i].age >>cmp[i].name;
-        cmp[i].score =i;
+    pair<int,string> tmp;
+    vector<pair<int,string>> arr;
+    for(int i = 0; i < num; i++)
+    {
+        cin >> tmp.first >> tmp.second;
+        arr.push_back(tmp);
     }
-
-    sort(cmp,cmp+num);
-
-    for(int i=0; i < num; i++){
-        cout << cmp[i].age << " " << cmp[i].name <<"\n";
-    }
-
+    stable_sort(arr.begin(),arr.end(),compare);
+    for(int i = 0; i < num; i++)
+        cout << arr[i].first << ' ' << arr[i].second << '\n';
 }
-*/
