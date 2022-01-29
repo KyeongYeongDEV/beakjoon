@@ -3,7 +3,7 @@
 #include<algorithm>
 using namespace std;
 
-int aaa(pair<int,int> a, pair<int,int> b){
+int aaa(pair<int,int> a, pair<int,int> b){//길이를 게산해주는 함수
     return (a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second-b.second);
 }
 
