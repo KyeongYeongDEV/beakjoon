@@ -23,5 +23,4 @@ int main(){ cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
         if(max <c){max = c;}
         cout << 100*max;
     }
-    
 }
