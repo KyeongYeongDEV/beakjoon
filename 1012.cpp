@@ -1,48 +1,74 @@
 #include<iostream>
-#include<vector>
 #include<queue>
-#include<algorithm>
 using namespace std;
 
-void BFS(int start,vector<int> graph[], bool check[]){
-    queue<int> q;
+int M,N,K;
+int arr[51][51] = {0,};
+bool check[51][51]={false,};
+int dx[] = {1,0,-1,0};
+int dy[] = {0,1,0,-1};
+queue<pair<int, int>> q;
 
-    q.push(start);
-    check[start] = true;
+void bfs(int x,int y){
+    q.push(make_pair(x,y));
 
     while(!q.empty()){
-        int tmp = q.front();
+        int a = q.front().first; // x
+        int b = q.front().second;// y
+
         q.pop();
-        cout << tmp<<" ";
-        for(int i =0; i <graph[tmp].size();i++){
-            if(check[graph[tmp][i]] == false){
-                q.push(graph[tmp][i]);
-                check[graph[tmp][i]] = true;
+        check[a][b]=true;
+
+        for(int i =0; i < 4; i++){
+            int nx = a + dx[i];
+            int ny = b + dy[i];
+
+            if(0 <= nx && 0 <= ny && nx <N && ny < M &&
+                !check[nx][ny] && arr[nx][ny] ==1){
+                q.push({ nx,ny });
+                check[nx][ny] = true;
             }
         }
     }
 }
 
-int main(){
-    int n,m,start;
-    cin >> n>>m>>start;//노드수, 엣지수, 시작하는 노드
-
-    vector<int> graph[n+1];
-
-    bool check[n+1];
-    fill(check,check+n+1,false);
-
-    for(int i =0; i<m;i++){
-        int x,y;
-        cin >> x>>y;
-        graph[x].push_back(y);
-        graph[y].push_back(x);
+void reset(){
+    while(!q.empty()){ //큐가 빌 때까지 
+        q.pop();
     }
-
-    for(int i =0 ; i < n; i++){ //정렬을 해줘야 순차적으로 접근한다.
-        sort(graph[i].begin(),graph[i].end());
+    for(int i =0; i < N;i ++){
+        for(int j =0 ; i <M; j++){
+            check[i][j] = false;
+            arr[i][j] = 0;
+        }
     }
+}
 
-    BFS(start,graph,check);
+int main(){cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
+    int T;
+    cin>> T;
 
+    for(int t = 0; t< T; t++){
+        int cnt =0;
+        reset();
+
+        cin >> M>>N>>K; //가로, 세로, 배추의 수
+
+        for(int i =0; i< K; i++){
+            int x,y;
+            cin >>x>>y;
+            arr[x][y] = 1; //배추가 심어져 있는 곳에 1
+        }
+
+        for(int i = 0; i <N; i++){
+            for(int j = 0; j < M; j++){
+                if(arr[i][j] ==1 && !check[i][j]){
+                    bfs(i,j);
+                    cnt++;
+                }
+            }
+        }
+
+        cout << cnt<<"\n";
+    }
 }
