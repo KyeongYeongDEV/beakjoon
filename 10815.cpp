@@ -18,7 +18,7 @@ bool bsreach(int key){
         }
         else{
             rear = mid-1;
-            mid = (front+rear)/2;
+            mid = ( front+rear)/2;
         }       
     }
     return false;
