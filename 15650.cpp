@@ -3,30 +3,32 @@
 #include<vector>
 using namespace std;
 
-int graph[11][11];
-int visited[11];
+bool visited[9]={0,};
+int arr[9] = {0,};
+int N,M;
 
-void dfs(int cur, int n){
-    visited[cur] =1;
-    for(int i=1; i <=n; i++){
-        if(graph[cur][i] ==1 && visited[i] ==0){//인접하고 방문하지 않았다면
-            cout << i;
-            dfs(i,n);
+void dfs(int num, int cnt){
+    if(cnt == M){
+        for(int i=0; i < M; i++){
+            cout<<arr[i] << ' ';
+        }
+        cout << "\n";
+        return ;
+    }
+
+    for(int i= num; i <= N; i++){
+        if(!visited[i]){
+            visited[i] = true;
+            arr[cnt] = i;
+            dfs(i+1,cnt+1);
+            visited[i] = false;
         }
     }
 }
 
 int main(){cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
-    int start =1; 
-
-    graph[1][3]=1;graph[3][5]=1; graph[5][7] =1;
-    graph[3][1]=1;graph[5][3]=1; graph[7][5] =1;
-
-    graph[1][2]=1;graph[2][4]=1; graph[4][8] =1;
-    graph[2][1]=1;graph[4][2]=1; graph[8][4] =1;
-
-    cout << start;
-    dfs(start,10);
+    cin >> N >> M;
+    dfs(1,0);
 
     return 0;
 }
