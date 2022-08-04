@@ -21,7 +21,7 @@ void dfs(int num, int cnt){
             visited[i] = true;
             arr[cnt] = i;
             dfs(i+1,cnt+1);
-            visited[i] = false;
+            visited[i] = false; 
         }
     }
 }

@@ -1,31 +1,29 @@
 #include<iostream>
-#include<vector>
-#include<algorithm>
 using namespace std;
 
-int main(){
-    int n,k,min =10000;
-    vector<int> v;
-    cin>>n>>k;
+int min(int a, int b){
+    return a < b ? a:b;
+}
 
-    for(int i=0; i < n; i++){
-        int tmp;
-        cin>>tmp;
-        v.push_back(tmp);
-        if(k % v[i] == 0 && k / v[i] < min){min = k / v[i]; }
+int main(){cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
+    int N,K;
+    int coin[101];
+    int DP[10001]={0,};
+
+    cin >> N >> K;
+
+    for(int i =1; i <= K; i++){
+       DP[i] = 10001;
     }
+   
+   for(int i =1; i <= N; i++){
+       cin >> coin[i];
 
-    sort(v.begin(),v.end());
-    int cnt =0;
-    for(int i=v.size()-1; i >=0; i--){
-        cnt+= k / v[i];
-        k = k% v[i];
-    }
+       for(int j=coin[i]; j<=K; j++){
+           DP[j] = min(DP[j],DP[j - coin[i]]+1);
+       }
+   }
 
-    if(k != 0 || min == 10000){
-        cout << -1;
-    }else{
-        if(cnt < min){min = cnt;}
-        cout << min;
-    }   
+   if(DP[K] == 10001){cout<< -1;}
+   else{cout<<DP[K];}
 }
