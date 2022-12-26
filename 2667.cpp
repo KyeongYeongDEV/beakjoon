@@ -3,7 +3,7 @@
 #include<queue>
 #include<algorithm>
 using namespace std;
- 
+
 string arr[26];
 bool check[26][26] ={false,};
 int dx[] = {-1,1,0,0};
