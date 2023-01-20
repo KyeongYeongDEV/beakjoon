@@ -1,43 +1,72 @@
 #include<iostream>
 #include<queue>
 using namespace std;
-#define MAX 100000
+#define MAX 101
 
-queue<pair<int, int> > q; //위치, 초
-int visited[200001];
-int n=0, m=0; // 언니 동생
+int graph[MAX][MAX][MAX]={0,};
+int dist[MAX][MAX][MAX]={0,};
+
+int dx[6] = {0,0,0,0,1,-1};
+int dy[6] = {0,0,1,-1,0,0};
+int dz[6] = {1,-1,0,0,0,0};
+
+int x=0,y=0,z=0;
+queue<pair<int, pair<int,int> > > q;
 
 void bfs(){
-    q.push(make_pair(n, 0));
-    visited[n] = 1;
-
     while(!q.empty()){
-        int x = q.front().first;
-        int cnt = q.front().second;
+        int tz = q.front().first;
+        int tx = q.front().second.first;
+        int ty = q.front().second.second;
+        
         q.pop();
+        
+        for(int i = 0;  i<6; i++){
+            int nz = tz + dz[i];
+            int nx = tx + dx[i];
+            int ny = ty + dy[i];
+            
+            if(!((0 <= nx && nx < y) && (0 <= ny && ny < x) && (0 <= nz && nz < z))) continue;
+            if(dist[nz][nx][ny]  != 0 || graph[nz][nx][ny] != 0)continue;     
 
-        if(x < 0|| x > MAX) continue;
-
-        if(x == m){
-            cout << cnt;
-            break;
-        }
-        if(!visited[x+1]){
-            q.push(make_pair(x+1, cnt+1));
-            visited[x+1] = 1;
-        }
-        if(!visited[x - 1]){
-            q.push(make_pair(x - 1, cnt+1));
-            visited[x-1] = 1;
-        }
-        if(!visited[x*2]){
-            q.push(make_pair(x*2, cnt+1));
-            visited[x*2] = 1;
+            q.push(make_pair(nz, make_pair(nx,ny)));
+            dist[nz][nx][ny] = dist[tz][tx][ty] + 1;
         }
     }
 }
 
-int main(){cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
-    cin >> n >> m;
+
+int main(){ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    cin >> x>> y >> z;
+    
+    for(int k =0; k < z; k++){
+        for(int i=0; i < y; i++){
+            for(int j =0; j < x; j++){
+                cin >> graph[k][i][j];
+                
+                if(graph[k][i][j] == 1){ //토마토가 들어오면 push
+                    q.push(make_pair(k, make_pair(i,j)));
+                    dist[k][i][j] = 1;
+                }
+            }
+        }
+    }
+    
     bfs();
+    
+    int result = -1;
+    for(int k =0; k < z; k++){
+        for(int i=0; i < y; i++){
+            for(int j =0; j < x; j++){
+                if(graph[k][i][j] == 0 && dist[k][i][j] == 0){
+                    //안 익은 게 있다면
+                    cout << -1;
+                    return 0;
+                }
+                
+                if(result < dist[k][i][j]) result = dist[k][i][j];
+            }
+        }
+    }
+    cout << result-1;
 }
