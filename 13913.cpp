@@ -27,7 +27,7 @@ void bsf(){
             if(i == 2){
                 nx *= dx[i];
             }else{
-                nx += dx[i];
+                nx += dx[i];    
             }
 
             if(nx < 0 || nx > MAX) continue;
