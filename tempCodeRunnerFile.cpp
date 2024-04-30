@@ -1,4 +1,7 @@
- // for(int i= 0; i < path.size(); i++){
-    //     cout << path.front() << " ";
-    //     path.pop();
-    // }
+
+void print(int i){
+    if(res[i] != 0){
+        print(res[i]);
+    }
+    cout << arr[i] <<  ' ';
+}
