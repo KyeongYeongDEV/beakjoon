@@ -40,7 +40,6 @@ int solution(){
     result = tmp1 < tmp2 ? tmp1 : tmp2;
 
     return result;
-
 }
 
 int main(){
