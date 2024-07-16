@@ -16,9 +16,9 @@ int main(){cout.tie(0); cin.tie(0); ios::sync_with_stdio(0);
         sum[i] += sum[i -1] + arr[i];
     }
 
-    for(int i =1; i <= n; i++){
+    for(int i =1; i <= n / 2 +1; i++){
         for(int j = 1; j <= n; j++){
-            int tmp = sum[j-1] - sum[i -1];
+            long long tmp = sum[j-1] - sum[i -1];
             m = max(m, min(tmp, sum[n] - tmp));
         }
     }
