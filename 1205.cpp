@@ -22,7 +22,7 @@ int main(){ cin.tie(0); cout.tie(0); ios::sync_with_stdio(0);
         if (v[i] > score){
             renk++;
         } else if (v[i] == score){
-            cnt++
+            renk = renk;
         }else break;
         cnt++;
     }
