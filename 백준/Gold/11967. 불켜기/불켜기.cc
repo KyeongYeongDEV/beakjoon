@@ -41,6 +41,7 @@ int bfs() {
                 light[a][b] = 1;
                 result++;
 
+                // 새로 불을 켠 방에 인접한 방이 이미 방문한 적 있는 방이면 접근이 가능함
                 for (int j = 0; j < 4; j++) {
                     int na = a + dx[j];
                     int nb = b + dy[j];
@@ -53,11 +54,13 @@ int bfs() {
                 }
             }
         }
+
+        // 불이 켜진 방 중에 아직 방문하지 않은 곳으로 이동
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            if ( !isRange(nx, ny) || visited[nx][ny] ||!light[nx][ny] ) continue;
+            if ( !isRange(nx, ny) || visited[nx][ny] || !light[nx][ny] ) continue;
 
             visited[nx][ny] = 1;
             q.push(make_pair(nx,ny));
